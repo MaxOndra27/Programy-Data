@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zálohování dat</title>
+    <link rel="stylesheet" href="../g/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Zálohování dat</h1>
+        <nav class="header-menu">
+            <a href="../index.html">Programy a data</a>
+            <a href="../A/operacni-systemy.html">Operační systémy</a>
+            <a href="../C/ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="../D/aplikacnisoftware.html">Aplikační software</a>
+            <a href="../E/instalaceprogramu.html">Instalace programů</a>
+            <a href="./zalohovani.html">Zálohování</a>
+            <a href="#">Licence</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('uvod')">Úvod</div>
+            <div class="menu-item" onclick="showContent('vyznam')">Důležitost záloh</div>
+            <div class="menu-item" onclick="showContent('typy')">Typy záloh</div>
+            <div class="menu-item" onclick="showContent('metody')">Metody zálohování</div>
+            <div class="menu-item" onclick="showContent('strategie')">Strategie</div>
+            <div class="menu-item" onclick="showContent('programy')">Programy</div>
+            <div class="menu-item" onclick="showContent('obnoveni')">Obnovení dat</div>
+        </div>
+
+        <div class="content">
+            <div id="uvod" class="content-section active">
+                <h2>💾 Zálohování dat</h2>
+                <p>Zálohování (backup) je proces kopírování vašich důležitých dat na jiné místo pro případ, že by došlo ke ztrátě originálních dat.</p>
+                <p>Ztrátu dat může způsobit mnoho faktorů - selhání hardware, virus, náhodné smazání nebo přírodní katastrofa. Bez zálohy mohou být vaše data ztracena navždy.</p>
+                
+                <div class="info-box">
+                    <strong>⚠️ Kritické:</strong> "Pokud neexistují tři kopie vašich dat, pak data vůbec neexistují." - Toto je zlaté pravidlo zálohování.
+                </div>
+
+                <h3>Statistika selhání</h3>
+                <ul>
+                    <li>10% disků selže během prvních 5 let provozu</li>
+                    <li>75% uživatelů nikdy nevytvoří zálohu</li>
+                    <li>50% uživatelů ztratí data bez zálohy</li>
+                    <li>Průměrná cena ztracených dat je tisíce korun</li>
+                </ul>
+            </div>
+
+            <div id="vyznam" class="content-section">
+                <h2>🎯 Proč je zálohování důležité?</h2>
+                
+                <h3>Příčiny ztráty dat</h3>
+                <ul>
+                    <li><strong>Selhání hardware:</strong> Pevný disk se porouchá</li>
+                    <li><strong>Ransomware a virus:</strong> Malware může šifrovat nebo mazat soubory</li>
+                    <li><strong>Náhodné smazání:</strong> Omylem smazaný soubor</li>
+                    <li><strong>Poškození souboru:</strong> Program selže během zápisu</li>
+                    <li><strong>Fyzické poškození:</strong> Počítač se rozbije nebo se zaplave</li>
+                    <li><strong>Krádež:</strong> Notebook nebo telefon je ukraden</li>
+                    <li><strong>Selhání OS:</strong> Operační systém přestane fungovat</li>
+                </ul>
+
+                <h3>Co by mělo být zálohováno</h3>
+                <ul>
+                    <li>Fotografie a videa (nezastupitelné vzpomínky)</li>
+                    <li>Dokumenty a texty (projekty, články)</li>
+                    <li>Email a kontakty</li>
+                    <li>Účty a hesla (důležité adresy a čísla účtů)</li>
+                    <li>Nastavení aplikací</li>
+                    <li>Instalační soubory programů</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Nejcennější data (fotografie, rodina dokumenty) by měly být zálohována nejčastěji.
+                </div>
+            </div>
+
+            <div id="typy" class="content-section">
+                <h2>📂 Typy záloh</h2>
+                
+                <h3>Úplná záloha (Full Backup)</h3>
+                <ul>
+                    <li>Kopíruje všechna data najednou</li>
+                    <li>Trvá nejdéle, ale je nejjednoduší</li>
+                    <li>Vhodná pro první zálohu nebo malá data</li>
+                    <li>Zabírá hodně místa</li>
+                </ul>
+
+                <h3>Inkrementální záloha</h3>
+                <ul>
+                    <li>Kopíruje pouze nová nebo změněná data od poslední zálohy</li>
+                    <li>Rychlejší a zabírá méně místa</li>
+                    <li>K obnovení potřebujete všechny inkrementální zálohy</li>
+                    <li>Ideální pro denní zálohování</li>
+                </ul>
+
+                <h3>Diferenciální záloha</h3>
+                <ul>
+                    <li>Kopíruje změny od poslední úplné zálohy</li>
+                    <li>Rychlejší než úplná, pomalejší než inkrementální</li>
+                    <li>K obnovení stačí poslední diferenciální a poslední úplná záloha</li>
+                </ul>
+
+                <h3>Zrcadlová záloha (Mirror)</h3>
+                <ul>
+                    <li>Přesná kopie vašich dat</li>
+                    <li>Vhodná pro důležitá data, která se často používají</li>
+                    <li>Zabírá stejně místa jako originál</li>
+                </ul>
+            </div>
+
+            <div id="metody" class="content-section">
+                <h2>🔧 Metody zálohování</h2>
+                
+                <h3>Metoda 1: Externí pevný disk</h3>
+                <ul>
+                    <li><strong>Výhody:</strong> Levné, rychlé, snadné</li>
+                    <li><strong>Nevýhody:</strong> Může se ztratit, porouchá se, omezená kapacita</li>
+                    <li><strong>Cena:</strong> 500-5000 Kč</li>
+                    <li><strong>Ideální pro:</strong> Domácí uživatele, malé firmy</li>
+                </ul>
+
+                <h3>Metoda 2: Cloud úložiště</h3>
+                <ul>
+                    <li><strong>Výhody:</strong> Bezpečné, dostupné odkudkoli, automatické</li>
+                    <li><strong>Nevýhody:</strong> Závislost na internetu, poplatek, bezpečnost dat</li>
+                    <li><strong>Populární služby:</strong> Google Drive, Dropbox, OneDrive, iCloud</li>
+                    <li><strong>Cena:</strong> 0-1000 Kč/měsíc</li>
+                </ul>
+
+                <h3>Metoda 3: USB flash disk</h3>
+                <ul>
+                    <li><strong>Výhody:</strong> Přenosný, levný, malý</li>
+                    <li><strong>Nevýhody:</strong> Malá kapacita, pomalý, méně spolehlivý</li>
+                    <li><strong>Ideální pro:</strong> Malé soubory, cestování</li>
+                </ul>
+
+                <h3>Metoda 4: NAS (Network Attached Storage)</h3>
+                <ul>
+                    <li><strong>Výhody:</strong> Velká kapacita, spolehlivá, dostupná v síti</li>
+                    <li><strong>Nevýhody:</strong> Drahá, složitější na nastavení</li>
+                    <li><strong>Cena:</strong> 2000-20000 Kč</li>
+                    <li><strong>Ideální pro:</strong> Firmy, velké domácnosti</li>
+                </ul>
+
+                <h3>Metoda 5: DVD/Blu-ray</h3>
+                <ul>
+                    <li><strong>Výhody:</strong> Levné, dlouhodobé skladování</li>
+                    <li><strong>Nevýhody:</strong> Pomalé, malá kapacita, zastaralé</li>
+                    <li><strong>Ideální pro:</strong> Archivování, dlouhodobé skladování</li>
+                </ul>
+            </div>
+
+            <div id="strategie" class="content-section">
+                <h2>📊 Strategie zálohování</h2>
+                
+                <h3>Strategie 3-2-1</h3>
+                <p>Nejlepší praktika pro zálohování:</p>
+                <ul>
+                    <li><strong>3:</strong> Mějte 3 kopie svých dat (originál + 2 zálohy)</li>
+                    <li><strong>2:</strong> Používejte 2 různá média (disk + cloud)</li>
+                    <li><strong>1:</strong> Skladujte 1 zálohu na jiném místě (mimo domů)</li>
+                </ul>
+
+                <h3>Plán zálohování</h3>
+                <ul>
+                    <li><strong>Denní:</strong> Kritické soubory (inkrementální)</li>
+                    <li><strong>Týdenní:</strong> Všechna data (diferenciální)</li>
+                    <li><strong>Měsíční:</strong> Úplná záloha všeho</li>
+                    <li><strong>Roční:</strong> Archivní záloha na oddělené místo</li>
+                </ul>
+
+                <h3>Automatizace zálohování</h3>
+                <ul>
+                    <li>Nastavte automatické zálohování</li>
+                    <li>Nechť systém sám rozhodne o času (např. v noci)</li>
+                    <li>Pravidelně ověřujte, že zálohy fungují</li>
+                    <li>Udržujte seznam záloh a jejich umístění</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Důležité:</strong> Automatické zálohování je nejlepší, protože eliminuje lidský faktor a zajistí konzistentní ochranu dat.
+                </div>
+            </div>
+
+            <div id="programy" class="content-section">
+                <h2>💻 Programy pro zálohování</h2>
+                
+                <h3>Windows - Vestavěné nástroje</h3>
+                <ul>
+                    <li><strong>File History:</strong> Automatické zálohování na externí disk</li>
+                    <li><strong>System Image:</strong> Úplná záloha systému</li>
+                    <li><strong>OneDrive:</strong> Cloud sync pro dokumenty</li>
+                </ul>
+
+                <h3>macOS - Vestavěné nástroje</h3>
+                <ul>
+                    <li><strong>Time Machine:</strong> Automatické zálohování na externí disk</li>
+                    <li><strong>iCloud:</strong> Cloud úložiště</li>
+                </ul>
+
+                <h3>Linux</h3>
+                <ul>
+                    <li><strong>Rsync:</strong> Mocný nástroj pro synchronizaci</li>
+                    <li><strong>Bacula:</strong> Profesionální zálohování</li>
+                    <li><strong>Duplicity:</strong> Šifrované zálohování</li>
+                </ul>
+
+                <h3>Třetí strana programy</h3>
+                <ul>
+                    <li><strong>Acronis True Image:</strong> Profesionální zálohování</li>
+                    <li><strong>Carbonite:</strong> Cloud backup</li>
+                    <li><strong>Backblaze:</strong> Neomezené cloud backup</li>
+                    <li><strong>Google Drive/Dropbox/OneDrive:</strong> Cloud sync</li>
+                </ul>
+            </div>
+
+            <div id="obnoveni" class="content-section">
+                <h2>♻️ Obnovení dat ze zálohy</h2>
+                
+                <h3>Postup obnovení ze zálohy</h3>
+                <ol>
+                    <li>Určete, která data potřebujete obnovit</li>
+                    <li>Umístěte zálohu do počítače (externí disk, USB, atd.)</li>
+                    <li>Otevřete program pro zálohování</li>
+                    <li>Vyberte zálohu k obnovení</li>
+                    <li>Vyberte soubory/složky k obnovení</li>
+                    <li>Vyberte umístění pro obnovení</li>
+                    <li>Spusťte obnovení</li>
+                    <li>Čekejte na dokončení</li>
+                    <li>Ověřte obnovená data</li>
+                </ol>
+
+                <h3>Obnovení celého systému</h3>
+                <ul>
+                    <li>Vložte instalační médium Windows/macOS/Linux</li>
+                    <li>Spusťte recovery/reinstalaci</li>
+                    <li>Vyberte možnost "Obnovit ze zálohy"</li>
+                    <li>Vyberte zálohu systému</li>
+                    <li>Počítač bude obnoven do stavu ze zálohy</li>
+                </ul>
+
+                <h3>Obnovení z Cloudu</h3>
+                <ul>
+                    <li>Přihlaste se do cloud služby (Google Drive, Dropbox)</li>
+                    <li>Vyhledejte potřebný soubor</li>
+                    <li>Klikněte na soubor a vyberte "Stáhnout"</li>
+                    <li>Uložte soubor do správné složky</li>
+                </ul>
+
+                <h3>Testování záloh</h3>
+                <p>Důležité: Pravidelně testujte, zda vaše zálohy fungují!</p>
+                <ul>
+                    <li>Měsíčně obnovte testovací soubor ze zálohy</li>
+                    <li>Ověřte integritu obnoveného souboru</li>
+                    <li>Zkontrolujte, že se data nezkorumpovala</li>
+                    <li>Dokumentujte čas potřebný k obnovení</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Pamatujte:</strong> Záloha, která nebyla testována, není záloha. Nedůvěřujte zálohám, dokud jste je testovali.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

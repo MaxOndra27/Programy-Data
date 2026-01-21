@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalace programů</title>
+    <link rel="stylesheet" href="../g/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Instalace programů</h1>
+        <nav class="header-menu">
+            <a href="../index.html">Programy a data</a>
+            <a href="../A/operacni-systemy.html">Operační systémy</a>
+            <a href="../C/ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="../D/aplikacnisoftware.html">Aplikační software</a>
+            <a href="./instalaceprogramu.html">Instalace programů</a>
+            <a href="../F/zalohovani.html">Zálohování</a>
+            <a href="#">Licence</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('uvod')">Úvod</div>
+            <div class="menu-item" onclick="showContent('zdroje')">Zdroje software</div>
+            <div class="menu-item" onclick="showContent('windows')">Instalace Windows</div>
+            <div class="menu-item" onclick="showContent('linux')">Instalace Linux</div>
+            <div class="menu-item" onclick="showContent('mac')">Instalace macOS</div>
+            <div class="menu-item" onclick="showContent('problemy')">Problémy</div>
+            <div class="menu-item" onclick="showContent('odinstalace')">Odinstalace</div>
+        </div>
+
+        <div class="content">
+            <div id="uvod" class="content-section active">
+                <h2>📥 Instalace programů</h2>
+                <p>Instalace programů je základní dovednost každého uživatele počítače. Správná instalace zajistí, že bude software fungovat správně a nebudete mít problémy.</p>
+                <p>Existují různé metody instalace v závislosti na operačním systému a typu software. V tomto oddílu si projdeme postupy pro Windows, Linux a macOS.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Tipy:</strong> Stahujte software pouze z oficiálních zdrojů a vždy si přečtěte pokyny k instalaci před zahájením procesu.
+                </div>
+            </div>
+
+            <div id="zdroje" class="content-section">
+                <h2>🔗 Zdroje pro stahování software</h2>
+                
+                <h3>Oficiální zdroje</h3>
+                <ul>
+                    <li><strong>Oficiální webové stránky výrobce:</strong> Nejspolehlivější zdroj - např. microsoft.com, adobe.com</li>
+                    <li><strong>Obchody aplikací:</strong> Microsoft Store, Apple App Store, Google Play</li>
+                    <li><strong>Linux repozitáře:</strong> Ubuntu Software Center, Fedora</li>
+                </ul>
+
+                <h3>Bezplatné alternativy</h3>
+                <ul>
+                    <li><strong>SourceForge:</strong> Open source software</li>
+                    <li><strong>GitHub:</strong> Vývojářské projekty</li>
+                    <li><strong>FileHippo:</strong> Starší verze software</li>
+                    <li><strong>CNET Download:</strong> Recenzované software</li>
+                </ul>
+
+                <h3>Kterým zdrojům se vyhnout</h3>
+                <ul>
+                    <li>Neznámé stránky bez reputace</li>
+                    <li>Stránky s podezřelými reklamami</li>
+                    <li>Torrentu a pirátské zdroje</li>
+                    <li>Staré či opuštěné webové stránky</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Bezpečnost:</strong> Vždy si ověřte, že jste na správné webové stránce. Phishingové stránky mohou vypadat jako originály.
+                </div>
+            </div>
+
+            <div id="windows" class="content-section">
+                <h2>🪟 Instalace na Windows</h2>
+                
+                <h3>Metoda 1: Instalační průvodce (.exe soubor)</h3>
+                <ol>
+                    <li>Stáhněte soubor .exe z oficiální webové stránky</li>
+                    <li>Dvakrát klikněte na staženou soubor</li>
+                    <li>Pokud se objeví otázka "Chcete povolit tomuto programu změny?" - klikněte "Ano"</li>
+                    <li>Postupujte podle pokynů průvodce instalací</li>
+                    <li>Vyberte umístění instalace (obvykle C:\Program Files)</li>
+                    <li>Vyberte součásti k instalaci (pokud je nabídnuto)</li>
+                    <li>Klikněte "Nainstalovat" a čekejte na dokončení</li>
+                    <li>Pokud je vyžadován, restartujte počítač</li>
+                </ol>
+
+                <h3>Metoda 2: Microsoft Store</h3>
+                <ol>
+                    <li>Otevřete Microsoft Store</li>
+                    <li>Vyhledejte software pomocí vyhledávacího pole</li>
+                    <li>Klikněte "Získat" nebo "Koupit"</li>
+                    <li>Přihlaste se pomocí svého Microsoft účtu</li>
+                    <li>Čekejte na dokončení instalace</li>
+                    <li>Program se spustí automaticky nebo jej najdete v nabídce Start</li>
+                </ol>
+
+                <h3>Metoda 3: Přenosný software (ZIP)</h3>
+                <ol>
+                    <li>Stáhněte ZIP soubor</li>
+                    <li>Klikněte pravým tlačítkem a vyberte "Extrahovat vše"</li>
+                    <li>Vyberte umístění pro extrakci</li>
+                    <li>Dvakrát klikněte na program (.exe) pro spuštění</li>
+                    <li>Software se spustí bez instalace - nepotřebuje restart</li>
+                </ol>
+
+                <h3>Pokyny při instalaci</h3>
+                <ul>
+                    <li>Vždy se přihlaste s účtem s právy administrátora</li>
+                    <li>Zavřete ostatní aplikace před instalací</li>
+                    <li>Přečtěte si licenční podmínky</li>
+                    <li>Nepřijímejte zbytečné doplnky (toolbars, atd.)</li>
+                    <li>Poznamenejte si instalační složku</li>
+                </ul>
+            </div>
+
+            <div id="linux" class="content-section">
+                <h2>🐧 Instalace na Linuxu</h2>
+                
+                <h3>Metoda 1: Správce balíčků (GUI)</h3>
+                <ol>
+                    <li>Otevřete Software Center nebo App Store svého Linuxu</li>
+                    <li>Vyhledejte program</li>
+                    <li>Klikněte "Instalovat"</li>
+                    <li>Zadejte heslo</li>
+                    <li>Čekejte na dokončení instalace</li>
+                </ol>
+
+                <h3>Metoda 2: Příkazový řádek (Terminal)</h3>
+                <p><strong>Ubuntu/Debian:</strong></p>
+                <ul>
+                    <li>sudo apt update</li>
+                    <li>sudo apt install program-name</li>
+                </ul>
+
+                <p><strong>Fedora/CentOS:</strong></p>
+                <ul>
+                    <li>sudo yum update</li>
+                    <li>sudo yum install program-name</li>
+                </ul>
+
+                <h3>Metoda 3: Instalace ze zdrojového kódu</h3>
+                <ol>
+                    <li>Stáhněte zdrojový kód (obvykle .tar.gz)</li>
+                    <li>Rozbalte: tar -xzf soubor.tar.gz</li>
+                    <li>Vstupte do adresáře: cd soubor</li>
+                    <li>Zkompilujte: ./configure && make</li>
+                    <li>Nainstalujte: sudo make install</li>
+                </ol>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Na Linuxu je nejbezpečnější používat oficiální repozitáře. Pokud možno se vyhněte instalaci ze zdrojového kódu.
+                </div>
+            </div>
+
+            <div id="mac" class="content-section">
+                <h2>🍎 Instalace na macOS</h2>
+                
+                <h3>Metoda 1: App Store</h3>
+                <ol>
+                    <li>Otevřete App Store</li>
+                    <li>Vyhledejte aplikaci</li>
+                    <li>Klikněte na tlačítko "Získat"</li>
+                    <li>Ověřte si identitu (Face ID, Touch ID nebo heslo Apple ID)</li>
+                    <li>Aplikace se automaticky stáhne a nainstaluje</li>
+                    <li>Aplikaci najdete v Applications složce</li>
+                </ol>
+
+                <h3>Metoda 2: Přetažení (Drag and Drop)</h3>
+                <ol>
+                    <li>Stáhněte DMG nebo ZIP soubor</li>
+                    <li>Dvakrát klikněte pro otevření</li>
+                    <li>Přetáhněte aplikaci do Applications složky</li>
+                    <li>Čekejte na kopírování</li>
+                    <li>Aplikace je nainstalována a připravena k použití</li>
+                </ol>
+
+                <h3>Metoda 3: Instalační balíček (.pkg)</h3>
+                <ol>
+                    <li>DvakrKitt klikněte na .pkg soubor</li>
+                    <li>Postupujte podle pokynů instalačního průvodce</li>
+                    <li>Zadejte heslo administrátora</li>
+                    <li>Čekejte na dokončení instalace</li>
+                </ol>
+
+                <h3>Metoda 4: Homebrew (pro vývojáře)</h3>
+                <ol>
+                    <li>Nainstalujte Homebrew: /bin/bash -c "$(curl -fsSL ...)"</li>
+                    <li>Nainstalujte software: brew install program-name</li>
+                </ol>
+            </div>
+
+            <div id="problemy" class="content-section">
+                <h2>🚨 Problémy při instalaci a řešení</h2>
+                
+                <h3>Instalace se nespustí</h3>
+                <p><strong>Příčina:</strong> Chybějí oprávnění administrátora nebo antivirus blokuje instalaci</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Přihlaste se s účtem administrátora</li>
+                    <li>Dočasně vypněte antivirus</li>
+                    <li>Restartujte počítač a zkuste znovu</li>
+                </ul>
+
+                <h3>Chyba "Soubor je nakažen"</h3>
+                <p><strong>Příčina:</strong> Antivirus zjistil podezřelý soubor</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Ověřte, že jste stahovali z oficiální webové stránky</li>
+                    <li>Přidejte soubor do výjimek antivirusu</li>
+                    <li>Stáhněte soubor znovu a zkuste instalaci</li>
+                </ul>
+
+                <h3>Nedostatek místa na disku</h3>
+                <p><strong>Příčina:</strong> Disk nemá dostatek volného místa</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Smazatr staré soubory nebo programy</li>
+                    <li>Vyprázdněte Koš</li>
+                    <li>Spusťte Disk Cleanup (Windows)</li>
+                    <li>Zvětšete prostor na disku (nový disk nebo rozšíření SSD)</li>
+                </ul>
+
+                <h3>Registrační klíč není přijat</h3>
+                <p><strong>Příčina:</strong> Chybný nebo nesprávný klíč</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Ověřte správnost klíče (zkopírujte jej znovu)</li>
+                    <li>Zkontrolujte velikost písmen</li>
+                    <li>Obraťte se na podporu výrobce</li>
+                </ul>
+
+                <h3>Konflikty s jinými programy</h3>
+                <p><strong>Příčina:</strong> Nový program koliduje s již instalovaným programem</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Odinstalujte konfliktující program</li>
+                    <li>Instalujte v bezpečném režimu</li>
+                    <li>Kontaktujte podporu</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Před řešením problémů si vždy vytvořte bod obnovení systému (Windows) nebo zálohu.
+                </div>
+            </div>
+
+            <div id="odinstalace" class="content-section">
+                <h2>🗑️ Odinstalace programů</h2>
+                
+                <h3>Windows - Odinstalace přes Ovládací panel</h3>
+                <ol>
+                    <li>Otevřete Ovládací panel</li>
+                    <li>Jděte na "Programy" → "Programy a funkce"</li>
+                    <li>Vyhledejte program k odinstalaci</li>
+                    <li>Klikněte na program a vyberte "Odinstalovat"</li>
+                    <li>Postupujte podle pokynů odinstalace</li>
+                    <li>Po dokončení restartujte počítač</li>
+                </ol>
+
+                <h3>Windows - Odinstalace z Microsoft Store</h3>
+                <ol>
+                    <li>Otevřete Microsoft Store</li>
+                    <li>Klikněte na účet (v pravém horním rohu)</li>
+                    <li>Vyberte "Moje aplikace a hry"</li>
+                    <li>Vyhledejte program k odinstalaci</li>
+                    <li>Klikněte "Odinstalovat"</li>
+                </ol>
+
+                <h3>Linux - Odinstalace</h3>
+                <p><strong>GUI:</strong> Otevřete Software Center a vyberte "Odinstalovat"</p>
+                <p><strong>Terminal (Ubuntu):</strong> sudo apt remove program-name</p>
+
+                <h3>macOS - Odinstalace</h3>
+                <ol>
+                    <li>Otevřete Finder</li>
+                    <li>Jděte do Applications</li>
+                    <li>Klikněte pravým tlačítkem na program</li>
+                    <li>Vyberte "Přesunout do Koše"</li>
+                    <li>Vyprázdněte Koš</li>
+                </ol>
+
+                <h3>Čištění po odinstalaci</h3>
+                <ul>
+                    <li><strong>Windows:</strong> Registry Cleaner pro odstranění zbytků</li>
+                    <li><strong>Všechny OS:</strong> Smazatr zbytkové konfigurační soubory ručně</li>
+                    <li><strong>Všechny OS:</strong> Spusťte disk cleanup pro vymazání cache</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Upozornění:</strong> Vždy odinstalujte software správným způsobem. Простé smazání složky aplikace může zanechat zbytky v systému.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

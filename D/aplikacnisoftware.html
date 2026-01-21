@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikační software</title>
+    <link rel="stylesheet" href="../g/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Aplikační software</h1>
+        <nav class="header-menu">
+            <a href="../index.html">Programy a data</a>
+            <a href="../A/operacni-systemy.html">Operační systémy</a>
+            <a href="../C/ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="./aplikacnisoftware.html">Aplikační software</a>
+            <a href="../E/instalaceprogramu.html">Instalace programů</a>
+            <a href="../F/zalohovani.html">Zálohování</a>
+            <a href="#">Licence</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('uvod')">Úvod</div>
+            <div class="menu-item" onclick="showContent('definice')">Definice</div>
+            <div class="menu-item" onclick="showContent('typy')">Typy software</div>
+            <div class="menu-item" onclick="showContent('funkcnost')">Funkcnosti</div>
+            <div class="menu-item" onclick="showContent('priklad')">Příklady</div>
+            <div class="menu-item" onclick="showContent('vyber')">Volba aplikace</div>
+            <div class="menu-item" onclick="showContent('problemy')">Problémy</div>
+        </div>
+
+        <div class="content">
+            <div id="uvod" class="content-section active">
+                <h2>💼 Úvod do aplikačního software</h2>
+                <p>Aplikační software, také nazývaný aplikace nebo programy, je software určený konečným uživatelům pro řešení konkrétních úloh. Jedná se o jednu z nejdůležitějších součástí počítačového systému, protože umožňuje uživatelům produktivně pracovat.</p>
+                <p>Na rozdíl od systémového software (operační systém), který zajišťuje řízení hardware, aplikační software se zaměřuje na konkrétní potřeby uživatele.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Klíčový poznatek:</strong> Aplikační software je nástroj, který uživatel používá k práci, zábavě, komunikaci a kreativitě.
+                </div>
+            </div>
+
+            <div id="definice" class="content-section">
+                <h2>📖 Co je aplikační software?</h2>
+                <p>Aplikační software je jakýkoliv program, který běží na operačním systému a slouží uživateli pro dosažení konkrétního cíle.</p>
+                
+                <h3>Charakteristiky aplikačního software:</h3>
+                <ul>
+                    <li>Běží na operačním systému (nemůže existovat bez OS)</li>
+                    <li>Je určen pro specifické účely a úkoly</li>
+                    <li>Vyžaduje určité minimální prostředky (RAM, prostor)</li>
+                    <li>Lze jej nainstalovat a odinstalovat nezávisle</li>
+                    <li>Obsahuje uživatelské rozhraní (GUI nebo CLI)</li>
+                    <li>Pracuje s daty a soubory</li>
+                </ul>
+
+                <h3>Rozdíl mezi systémovým a aplikačním software</h3>
+                <p><strong>Systémový software:</strong> Řídí hardware a umožňuje běh ostatních programů (OS, firmware, ovladače)</p>
+                <p><strong>Aplikační software:</strong> Pomáhá uživateli řešit konkrétní problémy (kancelářské aplikace, hry, grafické editory)</p>
+            </div>
+
+            <div id="typy" class="content-section">
+                <h2>🏷️ Typy aplikačního software</h2>
+                
+                <h3>Kancelářský software</h3>
+                <ul>
+                    <li><strong>Textové editory:</strong> Word, Writer, Google Docs</li>
+                    <li><strong>Tabulkové editory:</strong> Excel, Calc, Google Sheets</li>
+                    <li><strong>Prezentační software:</strong> PowerPoint, Impress</li>
+                    <li><strong>Databázové systémy:</strong> Access, MySQL</li>
+                </ul>
+
+                <h3>Grafický software</h3>
+                <ul>
+                    <li><strong>Fotoeditace:</strong> Photoshop, GIMP</li>
+                    <li><strong>Vektorová grafika:</strong> Illustrator, Inkscape</li>
+                    <li><strong>3D modelování:</strong> Blender, AutoCAD</li>
+                    <li><strong>Video editace:</strong> Premiere Pro, DaVinci Resolve</li>
+                </ul>
+
+                <h3>Multimediální software</h3>
+                <ul>
+                    <li><strong>Přehrávače:</strong> VLC, Windows Media Player</li>
+                    <li><strong>Hudební editory:</strong> Audacity, FL Studio</li>
+                    <li><strong>Streamovací služby:</strong> Netflix, Spotify</li>
+                </ul>
+
+                <h3>Internetový software</h3>
+                <ul>
+                    <li><strong>Webové prohlížeče:</strong> Chrome, Firefox, Edge</li>
+                    <li><strong>E-mailový klient:</strong> Outlook, Thunderbird</li>
+                    <li><strong>Komunikační aplikace:</strong> Skype, Teams, Discord</li>
+                </ul>
+
+                <h3>Systémové utility</h3>
+                <ul>
+                    <li><strong>Antivirový software:</strong> Kaspersky, Avast</li>
+                    <li><strong>Archivace:</strong> WinRAR, 7-Zip</li>
+                    <li><strong>Záloha dat:</strong> Acronis, Backblaze</li>
+                </ul>
+
+                <h3>Herní software</h3>
+                <ul>
+                    <li>Počítačové hry všech žánrů</li>
+                    <li>Mobilní hry</li>
+                    <li>Online hry a MMO</li>
+                </ul>
+
+                <h3>Vývojářský software</h3>
+                <ul>
+                    <li><strong>IDE:</strong> Visual Studio, PyCharm</li>
+                    <li><strong>Textové editory:</strong> VS Code, Sublime Text</li>
+                    <li><strong>Debuggery a testery</strong></li>
+                </ul>
+            </div>
+
+            <div id="funkcnost" class="content-section">
+                <h2>⚙️ Hlavní funkce aplikací</h2>
+                
+                <h3>Práce se soubory</h3>
+                <ul>
+                    <li>Vytváření nových souborů</li>
+                    <li>Otevírání a editace existujících souborů</li>
+                    <li>Ukládání a export dat</li>
+                    <li>Tisk dokumentů</li>
+                </ul>
+
+                <h3>Uživatelské rozhraní</h3>
+                <ul>
+                    <li>Nabídky a tlačítka</li>
+                    <li>Dialogová okna</li>
+                    <li>Panely nástrojů</li>
+                    <li>Klávesové zkratky</li>
+                </ul>
+
+                <h3>Bezpečnost</h3>
+                <ul>
+                    <li>Ověřování uživatele (přihlášení)</li>
+                    <li>Šifrování dat</li>
+                    <li>Oprávnění a přístup</li>
+                    <li>Bezpečné ukládání hesel</li>
+                </ul>
+
+                <h3>Komunikace</h3>
+                <ul>
+                    <li>Import a export dat</li>
+                    <li>Sdílení souborů</li>
+                    <li>Synchronizace s cloudem</li>
+                    <li>Kooperace více uživatelů</li>
+                </ul>
+            </div>
+
+            <div id="priklad" class="content-section">
+                <h2>📊 Příklady populárního aplikačního software</h2>
+                
+                <h3>Kancelářský balíček Microsoft Office</h3>
+                <ul>
+                    <li><strong>Word:</strong> Procesování textu</li>
+                    <li><strong>Excel:</strong> Tabulky a analýza dat</li>
+                    <li><strong>PowerPoint:</strong> Prezentace</li>
+                    <li><strong>Outlook:</strong> E-mail a kalendář</li>
+                </ul>
+
+                <h3>Open Source alternativy - LibreOffice</h3>
+                <ul>
+                    <li>Volně dostupné a bezplatné</li>
+                    <li>Kompatibilní s MS Office</li>
+                    <li>Writer, Calc, Impress, Base</li>
+                </ul>
+
+                <h3>Cloud řešení - Google Workspace</h3>
+                <ul>
+                    <li>Google Docs, Sheets, Slides</li>
+                    <li>Spolupráce v reálném čase</li>
+                    <li>Dostupné odkudkoli přes web</li>
+                </ul>
+
+                <h3>Grafika a design</h3>
+                <ul>
+                    <li><strong>Adobe Photoshop:</strong> Fotoeditace</li>
+                    <li><strong>GIMP:</strong> Zdarma alternativa</li>
+                    <li><strong>Canva:</strong> Online design pro neznalé</li>
+                </ul>
+            </div>
+
+            <div id="vyber" class="content-section">
+                <h2>🎯 Jak vybrat správný software</h2>
+                
+                <h3>Faktory při výběru</h3>
+                <ul>
+                    <li><strong>Účel:</strong> Co přesně potřebuji dělat?</li>
+                    <li><strong>Cena:</strong> Placený nebo bezplatný?</li>
+                    <li><strong>Kompatibilita:</strong> Podporuje můj OS?</li>
+                    <li><strong>Jednoduchost:</strong> Je snadný na použití?</li>
+                    <li><strong>Funkce:</strong> Má všechno co potřebuji?</li>
+                    <li><strong>Podpora:</strong> Je k dispozici nápověda?</li>
+                    <li><strong>Bezpečnost:</strong> Je software bezpečný?</li>
+                </ul>
+
+                <h3>Kde najít software</h3>
+                <ul>
+                    <li><strong>Microsoft Store:</strong> Pro Windows</li>
+                    <li><strong>App Store:</strong> Pro macOS a iOS</li>
+                    <li><strong>Google Play:</strong> Pro Android</li>
+                    <li><strong>Oficiální webové stránky:</strong> Nejspolehlivější</li>
+                    <li><strong>Repozitáře:</strong> Linux (Ubuntu Software Center)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Bezpečnost:</strong> Stahujte software pouze z oficiálních a důvěryhodných zdrojů. Neoficiální stránky mohou obsahovat malware.
+                </div>
+            </div>
+
+            <div id="problemy" class="content-section">
+                <h2>🚨 Běžné problémy a řešení</h2>
+                
+                <h3>Software se nespustí</h3>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Zkontrolujte, zda je software nainstalován</li>
+                    <li>Restartujte počítač</li>
+                    <li>Přeinstalujte software</li>
+                    <li>Zkontrolujte dostupné místo na disku</li>
+                </ul>
+
+                <h3>Software se zasekává nebo padá</h3>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Zavřete ostatní spuštěné programy</li>
+                    <li>Zvětšete dostupnou paměť RAM</li>
+                    <li>Aktualizujte software na nejnovější verzi</li>
+                    <li>Aktualizujte grafické ovladače</li>
+                </ul>
+
+                <h3>Kompatibilita</h3>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Ověřte, zda je software kompatibilní s vaším OS</li>
+                    <li>Zkuste režim kompatibility (ve Windows)</li>
+                    <li>Vyhledejte alternativní software</li>
+                </ul>
+
+                <h3>Bezpečnostní hrozby</h3>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Instalujte antivirus a udržujte jej aktuální</li>
+                    <li>Neklikejte na podezřelé odkazy</li>
+                    <li>Regularně aktualizujte software</li>
+                    <li>Používejte silná hesla</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Při problémech s aplikacemi nejprve zkuste jednoduchou řešení - restart nebo reinstalace. Teprve pak zkoušejte složitější postupy.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

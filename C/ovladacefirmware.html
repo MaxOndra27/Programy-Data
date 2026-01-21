@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ovladače, firmware a utility</title>
+    <link rel="stylesheet" href="../g/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ovladače, firmware a utility</h1>
+        <nav class="header-menu">
+            <a href="../index.html">Programy a data</a>
+            <a href="../A/operacni-systemy.html">Operační systémy</a>
+            <a href="./ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="../D/aplikacnisoftware.html">Aplikační software</a>
+            <a href="../E/instalaceprogramu.html">Instalace programů</a>
+            <a href="../F/zalohovani.html">Zálohování</a>
+            <a href="#">Licence</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('uvod')">Úvod</div>
+            <div class="menu-item" onclick="showContent('ovladace')">Ovladače</div>
+            <div class="menu-item" onclick="showContent('firmware')">Firmware</div>
+            <div class="menu-item" onclick="showContent('utility')">Utility</div>
+            <div class="menu-item" onclick="showContent('instalace')">Instalace</div>
+            <div class="menu-item" onclick="showContent('aktualizace')">Aktualizace</div>
+            <div class="menu-item" onclick="showContent('problemy')">Problémy a řešení</div>
+        </div>
+
+        <div class="content">
+            <div id="uvod" class="content-section active">
+                <h2>🔧 Úvod do ovladačů, firmware a utility</h2>
+                <p>Ovladače (drivers), firmware a utility jsou klíčové softwarové součásti, které zajišťují správné fungování hardware a komunikaci mezi počítačem a jeho periferiemi.</p>
+                <p>Bez těchto programů by hardware nebyl možné správně ovládat a maximálně využívat jeho funkce. Jedná se o základní a nezbytné softwarové vybavení každého počítačového systému.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Klíčový poznatek:</strong> Ovladače jsou mostů mezi operačním systémem a hardwarem, firmware obsahuje základní instrukce pro zařízení, a utility jsou pomocné programy pro správu.
+                </div>
+            </div>
+
+            <div id="ovladace" class="content-section">
+                <h2>🖨️ Ovladače (Drivers)</h2>
+                <p>Ovladač je softwarový program, který umožňuje operačnímu systému komunikovat se specifickým hardwarem a periferiemi.</p>
+                
+                <h3>Co dělá ovladač?</h3>
+                <ul>
+                    <li>Umožňuje OS komunikovat s hardwarem</li>
+                    <li>Překládá příkazy OS do jazyka, kterému hardware rozumí</li>
+                    <li>Zabezpečuje správné fungování zařízení</li>
+                    <li>Optimalizuje výkon periferií</li>
+                    <li>Poskytuje potřebné funkce zařízení uživateli</li>
+                </ul>
+
+                <h3>Typy ovladačů</h3>
+                <ul>
+                    <li><strong>Ovladače grafické karty (GPU):</strong> Pro správné zobrazování grafiky</li>
+                    <li><strong>Ovladače zvukové karty:</strong> Pro zvuk a audio přehrávání</li>
+                    <li><strong>Ovladače sítěníku:</strong> Pro připojení k internetu</li>
+                    <li><strong>Ovladače tiskárny:</strong> Pro tisk dokumentů</li>
+                    <li><strong>Ovladače myši a klávesnice:</strong> Pro vstupní zařízení</li>
+                    <li><strong>Ovladače USB:</strong> Pro externí zařízení</li>
+                    <li><strong>Ovladače chipset:</strong> Pro správu základní desky</li>
+                </ul>
+
+                <h3>Kde jsou ovladače dostupné?</h3>
+                <ul>
+                    <li><strong>Webové stránky výrobce:</strong> Nejnovější a nejspolehlivější zdroj</li>
+                    <li><strong>OS - Windows Update, App Store:</strong> Automatické aktualizace</li>
+                    <li><strong>CD/DVD s hardwarem:</strong> Instalační balíčky</li>
+                    <li><strong>Manažery zařízení OS:</strong> Vyhledávání a instalace</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Důležité:</strong> Vždy stahujte ovladače z oficiálních zdrojů výrobce hardware a operačního systému. Neoficiální zdroje mohou obsahovat škodlivý kód.
+                </div>
+            </div>
+
+            <div id="firmware" class="content-section">
+                <h2>💾 Firmware</h2>
+                <p>Firmware je speciální typ software, který je uložen v ROM (Read-Only Memory) zařízení. Jedná se o základní instrukce, které hardware spouští při zapnutí.</p>
+                
+                <h3>Charakteristiky firmware:</h3>
+                <ul>
+                    <li>Ukládá se v paměti ROM nebo Flash paměti zařízení</li>
+                    <li>Obsahuje základní instrukce pro provoz hardware</li>
+                    <li>Je velmi blízko hardware - nízkourovňový program</li>
+                    <li>Je nezávislý na operačním systému</li>
+                    <li>Obvykle je permanentní, ale lze jej aktualizovat</li>
+                </ul>
+
+                <h3>Příklady firmware:</h3>
+                <ul>
+                    <li><strong>BIOS/UEFI:</strong> Firmware základní desky</li>
+                    <li><strong>Firmware GPU:</strong> V grafické kartě</li>
+                    <li><strong>Firmware SSD:</strong> Na disku</li>
+                    <li><strong>Firmware routeru:</strong> V síťovém zařízení</li>
+                    <li><strong>Firmware tiskárny:</strong> V tiskárnách</li>
+                    <li><strong>Firmware telefonu:</strong> V mobilním zařízení</li>
+                </ul>
+
+                <h3>Aktualizace firmware</h3>
+                <p>Firmware lze aktualizovat, aby se:</p>
+                <ul>
+                    <li>Zlepšily bezpečnostní vlastnosti</li>
+                    <li>Opravily chyby a problémy</li>
+                    <li>Přidaly nové funkce</li>
+                    <li>Zlepšil výkon zařízení</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Upozornění:</strong> Aktualizace firmware je citlivá operace. Při selhání může zařízení přestat fungovat. Nikdy nepřerušujte proces aktualizace firmware.
+                </div>
+            </div>
+
+            <div id="utility" class="content-section">
+                <h2>🛠️ Utility programy</h2>
+                <p>Utility jsou pomocné programy, které usnadňují správu, údržbu a optimalizaci počítače a zařízení.</p>
+                
+                <h3>Typy utility programů:</h3>
+                <ul>
+                    <li><strong>Manažery zařízení:</strong> Správa ovladačů a hardware</li>
+                    <li><strong>Programy pro diagnostiku:</strong> Testování hardware</li>
+                    <li><strong>Optimalizační nástroje:</strong> Čištění a urychlení</li>
+                    <li><strong>Zálohovací programy:</strong> Ochrana dat</li>
+                    <li><strong>Antivirové programy:</strong> Ochrana bezpečnosti</li>
+                    <li><strong>Programy pro partition:</strong> Správa disků</li>
+                    <li><strong>Desfragmentátor:</strong> Optimalizace disku</li>
+                </ul>
+
+                <h3>Příklady utility od výrobců</h3>
+                <ul>
+                    <li><strong>NVIDIA GeForce Experience:</strong> Pro grafické karty NVIDIA</li>
+                    <li><strong>AMD Radeon Software:</strong> Pro grafické karty AMD</li>
+                    <li><strong>Intel Extreme Tuning Utility:</strong> Pro procesory Intel</li>
+                    <li><strong>Corsair iCUE:</strong> Pro herní hardware</li>
+                    <li><strong>Samsung Magician:</strong> Pro SSD disky</li>
+                </ul>
+            </div>
+
+            <div id="instalace" class="content-section">
+                <h2>📥 Instalace ovladačů a firmware</h2>
+                
+                <h3>Postup instalace ovladačů</h3>
+                <ol style="margin-left: 30px; margin-bottom: 15px;">
+                    <li>Určete, jaký hardware máte (model a výrobce)</li>
+                    <li>Zjistěte verzi vašeho operačního systému</li>
+                    <li>Navštivte webové stránky výrobce hardware</li>
+                    <li>Stáhněte správný ovladač (32-bit nebo 64-bit)</li>
+                    <li>Spusťte instalační program</li>
+                    <li>Postupujte podle pokynů průvodce instalací</li>
+                    <li>Restartujte počítač, pokud je to vyžadováno</li>
+                    <li>Ověřte, že hardware funguje správně</li>
+                </ol>
+
+                <h3>Způsoby instalace</h3>
+                <ul>
+                    <li><strong>Automatická:</strong> OS sám najde a nainstaluje ovladač</li>
+                    <li><strong>Manuální z webu:</strong> Stažení a instalace z webu výrobce</li>
+                    <li><strong>Pomocí instalačního CD:</strong> Použití disku dodaného s hardware</li>
+                    <li><strong>Aktualizace v OS:</strong> Windows Update, App Store, atd.</li>
+                </ul>
+
+                <h3>Instalace firmware</h3>
+                <p>Proces instalace firmware se liší podle zařízení:</p>
+                <ul>
+                    <li>Obvykle se provádí přes speciální utility program</li>
+                    <li>Vyžaduje připojení ke zdroji napájení</li>
+                    <li>Nesmí dojít k přerušení procesu</li>
+                    <li>Po instalaci je Often vyžadován restart zařízení</li>
+                </ul>
+            </div>
+
+            <div id="aktualizace" class="content-section">
+                <h2>🔄 Aktualizace ovladačů a firmware</h2>
+                
+                <h3>Proč aktualizovat ovladače?</h3>
+                <ul>
+                    <li>Zlepšení výkonu a stability</li>
+                    <li>Oprava bezpečnostních chyb</li>
+                    <li>Podpora nových funkcí</li>
+                    <li>Kompatibilita s novými OS</li>
+                    <li>Řešení problémů a chyb</li>
+                </ul>
+
+                <h3>Jak najít aktualizace</h3>
+                <ul>
+                    <li><strong>Automaticky:</strong> OS automaticky hlásí dostupné aktualizace</li>
+                    <li><strong>Manažery výrobců:</strong> Speciální programy kontrolují aktualizace</li>
+                    <li><strong>Webové stránky:</strong> Ruční vyhledání na webu výrobce</li>
+                    <li><strong>Device Manager:</strong> Správce zařízení v Windows</li>
+                </ul>
+
+                <h3>Četnost aktualizací</h3>
+                <ul>
+                    <li><strong>Kritické aktualizace:</strong> Bezpečnostní problémy - instalujte okamžitě</li>
+                    <li><strong>Běžné aktualizace:</strong> Nové funkce a opravy - instalujte pravidelně</li>
+                    <li><strong>Volitelné aktualizace:</strong> Experimentální funkce - volitelné</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Doporučuje se kontrolovat aktualizace alespoň jednou měsíčně. Automatické aktualizace jsou bezpečnější a jednodušší.
+                </div>
+            </div>
+
+            <div id="problemy" class="content-section">
+                <h2>🚨 Problémy a jejich řešení</h2>
+                
+                <h3>Chybějící ovladače</h3>
+                <p><strong>Problém:</strong> Hardware nefunguje nebo se zobrazuje "neznámé zařízení"</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Stáhněte ovladač z webu výrobce</li>
+                    <li>Nainstalujte ovladač ručně</li>
+                    <li>Restartujte počítač</li>
+                </ul>
+
+                <h3>Zastarělé ovladače</h3>
+                <p><strong>Problém:</strong> Hardware pracuje pomalu nebo se selhává</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Aktualizujte na nejnovější verzi ovladače</li>
+                    <li>Odstraňte starý ovladač a nainstalujte nový</li>
+                    <li>Restartujte systém</li>
+                </ul>
+
+                <h3>Nekompatiblní ovladač</h3>
+                <p><strong>Problém:</strong> Ovladač není kompatibilní s OS (32-bit vs 64-bit)</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Zjistěte, zda máte 32-bit nebo 64-bit OS</li>
+                    <li>Stáhněte správnou verzi ovladače</li>
+                    <li>Odstraňte starý ovladač a nainstalujte nový</li>
+                </ul>
+
+                <h3>Selhání aktualizace firmware</h3>
+                <p><strong>Problém:</strong> Aktualizace firmware se nezdařila a zařízení nefunguje</p>
+                <p><strong>Řešení:</strong></p>
+                <ul>
+                    <li>Nekupovat si zařízení zpět do "recovery" režimu</li>
+                    <li>Použijte speciální utility pro obnovu</li>
+                    <li>Kontaktujte podporu výrobce</li>
+                </ul>
+
+                <h3>Obecné tipy</h3>
+                <ul>
+                    <li><strong>Vždy zálohujte data</strong> před aktualizacemi</li>
+                    <li><strong>Stahujte z oficiálních zdrojů</strong> - Windows Update, webů výrobců</li>
+                    <li><strong>Neinstalujte starší verze</strong> - starší ovladače jsou často méně bezpečné</li>
+                    <li><strong>Restartujte po instalaci</strong> - mnohé změny vyžadují restart</li>
+                    <li><strong>Kontaktujte podporu</strong> pokud problém přetrvává</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>🔒 Bezpečnost:</strong> Nikdy nestahujte ovladače z neznámých zdrojů. Modifikované ovladače mohou obsahovat malware a poškodit váš počítač.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

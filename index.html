@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programy a data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .header-menu a:active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* MENU */
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+            border-left-color: #764ba2;
+        }
+
+        /* OBSAH */
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Programy a data</h1>
+        <nav class="header-menu">
+            <a href="./index.html">Programy a data</a>
+            <a href="./A/operacni-systemy.html">Operační systémy</a>
+            <a href="./C/ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="./D/aplikacnisoftware.html">Aplikační software</a>
+            <a href="./E/instalaceprogramu.html">Instalace programů</a>
+            <a href="./F/zalohovani.html">Zálohování</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- MENU -->
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('intro')">Úvod</div>
+            <div class="menu-item" onclick="showContent('cpu')">CPU - Procesor</div>
+            <div class="menu-item" onclick="showContent('ram')">RAM - Paměť</div>
+            <div class="menu-item" onclick="showContent('storage')">Úložiště (HDD/SSD)</div>
+            <div class="menu-item" onclick="showContent('gpu')">GPU - Grafická karta</div>
+            <div class="menu-item" onclick="showContent('motherboard')">Základní deska</div>
+            <div class="menu-item" onclick="showContent('power')">Zdroj napájení</div>
+            <div class="menu-item" onclick="showContent('cooling')">Chlazení</div>
+            <div class="menu-item" onclick="showContent('peripherals')">Periferní zařízení</div>
+        </div>
+
+        <!-- OBSAH -->
+        <div class="content">
+            <!-- ÚVOD -->
+            <div id="intro" class="content-section active">
+                <h2>📖 Úvod do hardwaru</h2>
+                <p>Hardware je fyzická součást počítačového systému, která zahrnuje všechny elektronické a mechanické komponenty, jež tvoří počítač a jeho okolí. Hardware je nezbytný pro provádění výpočtů, zpracování dat a komunikaci mezi různými zařízeními.</p>
+                
+                <h3>Co je hardware?</h3>
+                <p>Hardware se liší od software (programy a operačního systému). Zatímco software je nesnímatelný a lze jej kopírovat, hardware je fyzický a lze jej dotknout.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Bez vhodného hardwaru by software nemohl fungovat. Obě tyto složky si vzájemně určují.
+                </div>
+
+                <h3>Hlavní kategorie hardwaru</h3>
+                <ul>
+                    <li><strong>Interní komponenty:</strong> CPU, RAM, HDD, SSD, GPU</li>
+                    <li><strong>Externí komponenty:</strong> Monitor, klávesnice, myš, tiskárna</li>
+                    <li><strong>Podpůrné komponenty:</strong> Zdroj napájení, chlazení, základní deska</li>
+                </ul>
+            </div>
+
+            <!-- CPU -->
+            <div id="cpu" class="content-section">
+                <h2>⚙️ CPU - Centrální procesorová jednotka</h2>
+                <p>CPU (Central Processing Unit) je nejdůležitější komponenta počítače. Jde o "mozek" počítače, který vykonává všechny instrukce a provádí výpočty.</p>
+                
+                <h3>Funkce CPU</h3>
+                <ul>
+                    <li>Provádí aritmetické a logické operace</li>
+                    <li>Řídí tok dat v počítači</li>
+                    <li>Interpretuje a vykonává instrukce ze software</li>
+                    <li>Komunikuje s ostatními komponentami</li>
+                </ul>
+
+                <h3>Parametry CPU</h3>
+                <ul>
+                    <li><strong>Počet jader (cores):</strong> Více jader = lepší multitasking</li>
+                    <li><strong>Taktovací frekvence (GHz):</strong> Rychlost provádění instrukcí</li>
+                    <li><strong>Mezipaměť (Cache):</strong> Rychlá paměť pro údaje v CPU</li>
+                    <li><strong>TDP (tepelný výkon):</strong> Kolik tepla CPU produkuje</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Příklady:</strong> Intel Core i9, AMD Ryzen 9, Apple M3 Ultra
+                </div>
+
+                <h3>Generace a vývoj</h3>
+                <p>Dnešní procesory jsou tisícekrát výkonnější než procesory z 90. let. Technologie se vyvíjí velmi rychle a každý rok přicházejí nové generace s lepšími parametry.</p>
+            </div>
+
+            <!-- RAM -->
+            <div id="ram" class="content-section">
+                <h2>🎯 RAM - Operační paměť</h2>
+                <p>RAM (Random Access Memory) je dočasná paměť počítače, kterou CPU používá k uchování dat a instrukcí, které právě zpracovává. Jakmile vypnete počítač, všechna data v RAM se vymažou.</p>
+                
+                <h3>Účel RAM</h3>
+                <ul>
+                    <li>Dočasné ukládání dat během běhu programů</li>
+                    <li>Umožňuje multitasking (spouštění více programů)</li>
+                    <li>Zrychluje práci s programy oproti disku</li>
+                </ul>
+
+                <h3>Typy RAM</h3>
+                <ul>
+                    <li><strong>DDR3:</strong> Starší, pomaleší, levnější</li>
+                    <li><strong>DDR4:</strong> Běžný standard, dobrý poměr ceny a výkonu</li>
+                    <li><strong>DDR5:</strong> Nejnovější, nejrychlejší, nejdražší</li>
+                </ul>
+
+                <h3>Kolik RAM je dostatečné?</h3>
+                <ul>
+                    <li><strong>4 GB:</strong> Základní web, email, office aplikace</li>
+                    <li><strong>8 GB:</strong> Běžné používání, gaming, střih videa</li>
+                    <li><strong>16 GB:</strong> Náročné aplikace, programování, 3D grafika</li>
+                    <li><strong>32 GB+:</strong> Profesionální práce, virtuální stroje</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚡ Poznámka:</strong> Více RAM = lépe, ale musí být vyváženo s ostatními komponentami.
+                </div>
+            </div>
+
+            <!-- ÚLOŽIŠTĚ -->
+            <div id="storage" class="content-section">
+                <h2>💾 Úložiště - HDD a SSD</h2>
+                <p>Úložiště je místo, kde se trvale uchovávají všechny vaše data - operační systém, programy, dokumenty, fotografie a videa. Na rozdíl od RAM se data v úložišti zachovají i po vypnutí počítače.</p>
+                
+                <h3>HDD - Pevný disk (Hard Disk Drive)</h3>
+                <p>Starší typ úložiště, který používá rotující desky a čtecí hlavu.</p>
+                <ul>
+                    <li><strong>Výhody:</strong> Levný, velká kapacita</li>
+                    <li><strong>Nevýhody:</strong> Pomalý, hlučný, dá se snáze poškodit</li>
+                    <li><strong>Kapacita:</strong> Obvykle 1-4 TB</li>
+                </ul>
+
+                <h3>SSD - Solid State Drive</h3>
+                <p>Moderní typ úložiště bez pohyblivých částí, používá flash paměť.</p>
+                <ul>
+                    <li><strong>Výhody:</strong> Velmi rychlý, tichy, trvanlivý</li>
+                    <li><strong>Nevýhody:</strong> Dražší, obvykle menší kapacita</li>
+                    <li><strong>Kapacita:</strong> Obvykle 256 GB - 4 TB</li>
+                </ul>
+
+                <h3>Typy SSD</h3>
+                <ul>
+                    <li><strong>SATA SSD:</strong> Kompatibilní s HDD, stále pomalý než NVMe</li>
+                    <li><strong>NVMe:</strong> Nejrychlejší, moderní standard</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>✨ Doporučení:</strong> Ideální je mít SSD pro OS a programy + HDD pro archiv.
+                </div>
+            </div>
+
+            <!-- GPU -->
+            <div id="gpu" class="content-section">
+                <h2>🎮 GPU - Grafická karta</h2>
+                <p>GPU (Graphics Processing Unit) je speciální procesor zaměřený na vykreslování grafiky a videa. Je optimalizován pro paralelní zpracování, což jej činí ideálním i pro umělou inteligenci.</p>
+                
+                <h3>Funkce GPU</h3>
+                <ul>
+                    <li>Vykreslování obrázků a videa na obrazovku</li>
+                    <li>Akcelerace 3D grafiky v hrách</li>
+                    <li>Zpracování videa a foto efektů</li>
+                    <li>Výpočty v AI a strojovém učení</li>
+                </ul>
+
+                <h3>Typy GPU</h3>
+                <ul>
+                    <li><strong>Integrovaná:</strong> Součást CPU, pro běžné použití</li>
+                    <li><strong>Dedikovaná:</strong> Samostatná karta, pro gaming a práci</li>
+                </ul>
+
+                <h3>Hlavní výrobci</h3>
+                <ul>
+                    <li><strong>NVIDIA GeForce:</strong> Nejpopulárnější, nejlepší pro gaming</li>
+                    <li><strong>AMD Radeon:</strong> Dobrá alternativa, levnější</li>
+                    <li><strong>Intel Arc:</strong> Nováček na trhu, slibný vývoj</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>🎯 GPU paměť:</strong> Vlastní VRAM (obvykle 4-24 GB), oddělená od systémové RAM.
+                </div>
+            </div>
+
+            <!-- MOTHERBOARD -->
+            <div id="motherboard" class="content-section">
+                <h2>🔌 Základní deska (Motherboard)</h2>
+                <p>Základní deska (mainboard) je páteř počítače - propojuje všechny komponenty a umožňuje jejich komunikaci.</p>
+                
+                <h3>Funkce základní desky</h3>
+                <ul>
+                    <li>Propojení všech komponent (CPU, RAM, GPU, HDD)</li>
+                    <li>Umožnění komunikace mezi součástkami</li>
+                    <li>Napájení všech komponent</li>
+                    <li>Regulace napětí a teploty</li>
+                </ul>
+
+                <h3>Důležitá vybavení</h3>
+                <ul>
+                    <li><strong>CPU sokety:</strong> Místo, kde se připojuje procesor</li>
+                    <li><strong>RAM sloty:</strong> Místo pro paměťové moduly</li>
+                    <li><strong>PCI-E sloty:</strong> Pro grafické karty a další rozšíření</li>
+                    <li><strong>SATA konektory:</strong> Pro pevné disky</li>
+                    <li><strong>USB konektory:</strong> Pro periferní zařízení</li>
+                </ul>
+
+                <h3>Populární čipsety</h3>
+                <ul>
+                    <li><strong>Intel:</strong> Z790, Z690, B760</li>
+                    <li><strong>AMD:</strong> X870, X770, B850</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Kompatibilita:</strong> CPU a základní deska se musí shodovat v soketu!
+                </div>
+            </div>
+
+            <!-- POWER SUPPLY -->
+            <div id="power" class="content-section">
+                <h2>⚡ Zdroj napájení</h2>
+                <p>Zdroj napájení (PSU - Power Supply Unit) je zodpovědný za převod elektrické energie ze zásuvky na formu, kterou počítač může používat.</p>
+                
+                <h3>Funkce zdroje napájení</h3>
+                <ul>
+                    <li>Konverze AC (střídavé) na DC (stejnosměrné) napětí</li>
+                    <li>Napájení všech komponent počítače</li>
+                    <li>Ochrana před přepětím a zkratem</li>
+                    <li>Regulace napětí na správné úrovni</li>
+                </ul>
+
+                <h3>Výběr vhodného zdroje</h3>
+                <ul>
+                    <li><strong>Výkon (W):</strong> Měl by být o 20-30% vyšší než potřeba</li>
+                    <li><strong>Účinnost:</strong> Alespoň 80+ Bronze, lepší 80+ Gold</li>
+                    <li><strong>Modularita:</strong> Modulární zdroje mají méně kabelů</li>
+                </ul>
+
+                <h3>Orientační výkon pro různé systémy</h3>
+                <ul>
+                    <li><strong>Office PC:</strong> 300-400 W</li>
+                    <li><strong>Gaming (střední):</strong> 650-750 W</li>
+                    <li><strong>Gaming (high-end):</strong> 850-1000 W</li>
+                    <li><strong>Workstation:</strong> 1000-1500 W</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Kvalitní zdroj se vyplatí - ochraňuje ostatní komponenty a trvá déle.
+                </div>
+            </div>
+
+            <!-- CHLAZENÍ -->
+            <div id="cooling" class="content-section">
+                <h2>❄️ Chlazení počítače</h2>
+                <p>Chlazení je kritické pro stabilitu a dlouhověkost počítače. Vysoké teploty mohou snížit výkon, zkrátit životnost komponent a způsobit poruchy.</p>
+                
+                <h3>Typy chlazení</h3>
+                <ul>
+                    <li><strong>Vzduchové chlazení:</strong> Levné, jednoduché, účinné pro běžné použití</li>
+                    <li><strong>Kapalinové chlazení:</strong> Efektivnější, složitější, dražší</li>
+                </ul>
+
+                <h3>Komponenty chladicího systému</h3>
+                <ul>
+                    <li><strong>Ventilátor CPU:</strong> Chladí procesor</li>
+                    <li><strong>Chladič GPU:</strong> Chladí grafickou kartu</li>
+                    <li><strong>Skříňové ventilátory:</strong> Zajišťují proudění vzduchu v konfiguraci</li>
+                    <li><strong>Termální pasta:</strong> Zvyšuje přenos tepla mezi komponentou a chladičem</li>
+                </ul>
+
+                <h3>Ideální teploty</h3>
+                <ul>
+                    <li><strong>CPU v klidu:</strong> 30-50°C</li>
+                    <li><strong>CPU pod zátěží:</strong> Do 80-85°C</li>
+                    <li><strong>GPU v klidu:</strong> 30-45°C</li>
+                    <li><strong>GPU pod zátěží:</strong> Do 75-85°C</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚠️ Pozor:</strong> Teploty nad 90°C mohou poškodit komponenty! Kontrolujte je pravidelně.
+                </div>
+            </div>
+
+            <!-- PERIFERNÍ ZAŘÍZENÍ -->
+            <div id="peripherals" class="content-section">
+                <h2>🖱️ Periferní zařízení</h2>
+                <p>Periferní zařízení jsou externí komponenty, které se připojují k počítači a rozšiřují jeho funkčnost. Uživatel s nimi obvykle interaguje přímo.</p>
+                
+                <h3>Vstupní zařízení</h3>
+                <ul>
+                    <li><strong>Klávesnice:</strong> Pro psaní textu a zadávání příkazů</li>
+                    <li><strong>Myš:</strong> Pro ovládání kurzoru a výběr prvků</li>
+                    <li><strong>Gamepad:</strong> Pro hraní her</li>
+                    <li><strong>Skener:</strong> Pro digitalizaci fyzických dokumentů</li>
+                    <li><strong>Mikrofon:</strong> Pro nahrávání zvuku</li>
+                </ul>
+
+                <h3>Výstupní zařízení</h3>
+                <ul>
+                    <li><strong>Monitor/Displej:</strong> Pro zobrazení videa a grafiky</li>
+                    <li><strong>Reproduktory/Sluchátka:</strong> Pro přehrávání zvuku</li>
+                    <li><strong>Tiskárna:</strong> Pro tisk dokumentů na papír</li>
+                    <li><strong>Projektor:</strong> Pro promítání na stěnu</li>
+                </ul>
+
+                <h3>Typy připojení</h3>
+                <ul>
+                    <li><strong>USB:</strong> Nejběžnější, kabelový</li>
+                    <li><strong>Wireless (2.4 GHz):</strong> Bezdrátový, bezpečný</li>
+                    <li><strong>Bluetooth:</strong> Bezdrátový, kratší dosah</li>
+                    <li><strong>3.5mm jack:</strong> Sluchátka, микрофон</li>
+                    <li><strong>HDMI/DisplayPort:</strong> Pro připojení monitorů</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tipy:</strong> Kvalitní periferní zařízení zlepšují produktivitu a pohodlí při práci.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            // Skryj všechny sekce
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Odeberi aktivní třídu z menu položek
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Zobraz vybranou sekci
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Označ aktivní menu položku
+            event.target.classList.add('active');
+
+            // Posuň na začátek obsahu
+            document.querySelector('.content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operační systémy</title>
+    <link rel="stylesheet" href="../g/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .header-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-menu a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .menu {
+            width: 250px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .menu h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f0f3ff;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .menu-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .content-section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%;
+                position: static;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Operační systémy</h1>
+        <nav class="header-menu">
+            <a href="../index.html">Programy a data</a>
+            <a href="./operacni-systemy.html">Operační systémy</a>
+            <a href="../C/ovladacefirmware.html">Ovladače, firmware</a>
+            <a href="../D/aplikacnisoftware.html">Aplikační software</a>
+            <a href="../E/instalaceprogramu.html">Instalace programů</a>
+            <a href="../F/zalohovani.html">Zálohování</a>
+            <a href="#">Licence</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="menu">
+            <h3>📋 Menu</h3>
+            <div class="menu-item active" onclick="showContent('uvod')">Úvod</div>
+            <div class="menu-item" onclick="showContent('definice')">Definice OS</div>
+            <div class="menu-item" onclick="showContent('funkcni')">Funkční prvky</div>
+            <div class="menu-item" onclick="showContent('historie')">Historie</div>
+            <div class="menu-item" onclick="showContent('typy')">Typy OS</div>
+            <div class="menu-item" onclick="showContent('priklad')">Příklady</div>
+        </div>
+
+        <div class="content">
+            <div id="uvod" class="content-section active">
+                <h2>🖥️ Úvod do operačních systémů</h2>
+                <p>Programové vybavení (software) je podmínkou využití technického vybavení (hardware). V raných dobách počítačové éry byly programy vytvářeny vždy pro konkrétní hardware.</p>
+                <p>V okamžiku, kdy počítače začaly být produkovány ve větších sériích, objevila se i potřeba vývoje speciálních systémových programů, které by obstaraly základní operace s hardwarem a nabídly prostředí pro běh aplikací, tj. programů určených pro konkrétní účely.</p>
+                
+                <div class="info-box">
+                    <strong>💡 Klíčový poznatek:</strong> Operační systém je most mezi hardwarem a uživatelem, který zajišťuje efektivní komunikaci a správu všech prostředků.
+                </div>
+            </div>
+
+            <div id="definice" class="content-section">
+                <h2>📖 Definice operačního systému</h2>
+                <p>Základním programovým vybavením počítačů (a jim podobných zařízení) jsou operační systémy (OS - Operation System).</p>
+                
+                <h3>Nejdůležitější funkce OS:</h3>
+                <ul>
+                    <li>Zajištění řízení hardware</li>
+                    <li>Správa procesoru a paměti</li>
+                    <li>Správa diskových médií a dalších zařízení</li>
+                    <li>Instalace a správa ovladačů zařízení (drivers)</li>
+                    <li>Zpřístupnění technického vybavení běžícím procesům</li>
+                </ul>
+
+                <h3>Klíčové součásti OS:</h3>
+                <ul>
+                    <li><strong>Jádro systému:</strong> Tvoří subsystémy pro správu procesoru, paměti, diskových médií a zařízení</li>
+                    <li><strong>Aplikační rozhraní (API):</strong> Nabízí programátorům prostředky pro vývoj aplikací</li>
+                    <li><strong>Uživatelské rozhraní:</strong> Slouží k ovládání OS a spouštění aplikací</li>
+                </ul>
+            </div>
+
+            <div id="funkcni" class="content-section">
+                <h2>⚙️ Funkční prvky operačního systému</h2>
+                
+                <h3>Příkazový řádek vs. Grafické rozhraní</h3>
+                <p>Zatímco starší OS se ovládaly často prostřednictvím příkazového řádku (CLI - Command Line Interface), moderní systémy poskytují grafické uživatelské rozhraní (GUI - Graphic User Interface) založené na oknech a grafických prvcích.</p>
+
+                <h3>Subsystémy OS:</h3>
+                <ul>
+                    <li><strong>Správa procesů:</strong> Řídí běh aplikací a jejich priority</li>
+                    <li><strong>Správa paměti:</strong> Přiděluje RAM jednotlivým programům</li>
+                    <li><strong>Správa souborů:</strong> Organizuje data na discích</li>
+                    <li><strong>Správa vstupů/výstupů:</strong> Řídí komunikaci s periferiemi</li>
+                    <li><strong>Zabezpečení:</strong> Chrání data a systém</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>🔒 Bezpečnost:</strong> Moderní OS obsahují vrstvy zabezpečení pro ochranu dat a kontrolu přístupu uživatelů.
+                </div>
+            </div>
+
+            <div id="historie" class="content-section">
+                <h2>📚 Historie operačních systémů</h2>
+                
+                <h3>Počátky - UNIX</h3>
+                <p>Na počátku vývoje moderních OS byl víceúlohový a víceuživatelský systém UNIX, který se od 70. let používal v sálových počítačích i minipočítačích. Jeho principy využily i další OS.</p>
+
+                <h3>80. - 90. léta: Era osobních počítačů</h3>
+                <p>V 80. letech minulého století si vzájemně konkurovaly:</p>
+                <ul>
+                    <li><strong>MS DOS:</strong> Microsoft - instalován na počítačích IBM PC</li>
+                    <li><strong>Mac OS:</strong> Apple - rozvinula myšlenky Xeroxu, první grafické uživatelské rozhraní</li>
+                    <li><strong>MS Windows:</strong> Microsoft - založen na principech Mac OS, hrál prim přelomu tisíciletí</li>
+                </ul>
+
+                <h3>Vzestup Linuxu</h3>
+                <p>Linux, pojmenovaný podle svého tvůrce Linuse Torvaldsa a staršího vzoru UNIXu, získával stále větší popularitu jako volně šiřitelný systém.</p>
+            </div>
+
+            <div id="typy" class="content-section">
+                <h2>🏷️ Typy operačních systémů</h2>
+                <p>Současné OS rozdělujeme nejčastěji podle typů zařízení, pro která jsou určeny:</p>
+
+                <h3>Serverové OS</h3>
+                <ul>
+                    <li>MS Windows 2012 Server</li>
+                    <li>Linux distribuce</li>
+                    <li>Unix</li>
+                </ul>
+
+                <h3>Desktopové OS</h3>
+                <ul>
+                    <li>MS Windows (domácnosti a kanceláře)</li>
+                    <li>Linux Ubuntu</li>
+                    <li>OS X (macOS)</li>
+                </ul>
+
+                <h3>Mobilní OS</h3>
+                <ul>
+                    <li>Android</li>
+                    <li>iOS</li>
+                    <li>Windows Phone</li>
+                    <li>Symbian</li>
+                </ul>
+
+                <h3>Real-Time OS (RTOS)</h3>
+                <p>Speciální systémy reálného času, které zajišťují provoz "chytrých" zařízení:</p>
+                <ul>
+                    <li>Robotické kamery pro sportovní přenosy</li>
+                    <li>Měřící přístroje na orbitálních stanicích</li>
+                    <li>Jednotky pro řízení průmyslových procesů</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>⚡ Rozdíl:</strong> U desktopových systémů lze pozdržet některé operace. V RTOS je nezbytné provádět operace bez prodlevy a s vysokou spolehlivostí v reálném čase.
+                </div>
+            </div>
+
+            <div id="priklad" class="content-section">
+                <h2>📊 Příklady a porovnání</h2>
+
+                <h3>Dominance OS na trzích</h3>
+                <ul>
+                    <li><strong>Osobní počítače:</strong> Windows dominuje v domácnostech i kancelářích</li>
+                    <li><strong>Serverové služby:</strong> Linuxové distribuce jsou velmi často instalovány na síťových serverech</li>
+                    <li><strong>Mobilní zařízení:</strong> Android a iOS ovládají trh</li>
+                </ul>
+
+                <h3>Výběr OS podle potřeby</h3>
+                <p>Volba operačního systému závisí na:</p>
+                <ul>
+                    <li>Účelu použití (kancelář, hraní, vývoj, server)</li>
+                    <li>Dostupném hardwaru</li>
+                    <li>Požadavcích na bezpečnost a stabilitu</li>
+                    <li>Potřebných aplikacích a nástrojích</li>
+                    <li>Rozpočtu na software</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>💡 Tipy:</strong> Moderní trendy ukazují na stabilizaci - Windows pro desktopy, Linux pro servery, Android/iOS pro mobilní zařízení.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html> 
